@@ -11,13 +11,8 @@ namespace example
 
             // Add services to the container.
 
-            builder.Services.AddControllers(ops =>
-            {
-
-                ops.Conventions.Insert(0, new CustomApplicationModelConvention());
-
-
-            }).ConfigureApplicationPartManager(o => o.FeatureProviders.Add(new DynamicControlleFeatureProvider()));
+            builder.Services.AddControllers();
+            builder.Services.AddDynamicApi();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

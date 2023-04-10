@@ -15,11 +15,20 @@ namespace example.Controllers
         }
 
         [HttpPost("AddUser")]
-        public ActionResult Post()
+        public ActionResult Post([FromBody] User user)
         {
 
-            return new JsonResult("Post");
+            return new JsonResult(user);
         }
+
+        [HttpPost]
+        public ActionResult SaveFile(IFormFile file)
+        {
+            var fileName = file.FileName;
+
+            return new JsonResult($"文件名为{fileName}");
+        }
+
 
         [HttpPut("UpdateUser")]
         public ActionResult Put()
@@ -34,5 +43,12 @@ namespace example.Controllers
 
             return new JsonResult("Delete");
         }
+    }
+
+    public class User
+    {
+
+        public string Name { get; set; }
+
     }
 }

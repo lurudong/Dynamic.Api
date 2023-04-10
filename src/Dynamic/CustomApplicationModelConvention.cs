@@ -29,12 +29,14 @@ namespace Dynamic
 
             foreach (var controller in application.Controllers)
             {
+
                 var controllerType = controller.ControllerType.AsType();
                 //是否继承IDynamicService
                 if (typeof(IDynamicService).IsAssignableFrom(controllerType))
                 {
 
 
+                    controller.ControllerName = PostSuffix(controller.ControllerName, "Service");
                     ConfigureSelector(controller);
                 }
             }
@@ -154,6 +156,25 @@ namespace Dynamic
             }
 
             return actionName;
+        }
+
+        private string PostSuffix(string value, string suffix)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(suffix))
+            {
+                return value;
+            }
+
+            if (!value.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+            {
+                return value;
+            }
+            return value.Substring(0, value.Length - suffix.Length);
         }
     }
 }
